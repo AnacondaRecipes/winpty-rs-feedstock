@@ -9,9 +9,15 @@ source:
   url: https://github.com/andfoy/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
   sha256: d67f96abc22d4b13efb9a88969caf9929a2e8b1b928843b5ab122455e9640e7f
 
+
 build:
   skip: true  # [not win]
   number: 0
+  build:
+  # Build
+  - {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  # License generation
+  - cargo-bundle-licenses --format yaml --output "{{ SRC_DIR }}\THIRDPARTY.yml"
 
 requirements:
   build:
